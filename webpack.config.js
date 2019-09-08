@@ -114,7 +114,7 @@ const config = {
             ignored: /node_modules/
         },
         host: 'localhost',
-        port: 8000
+        port: 3200
     }
 }
 

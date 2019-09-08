@@ -1,7 +1,10 @@
 import '../scss/index.scss'
 import Header from '../components/header/index'
+import Nav from '../components/nav/nav'
+import {news_type} from '../utils/data'
 
 const header = new Header()
+const nav = new Nav()
 
 const App = ($) => {
     const $app = $('#app');
@@ -11,7 +14,8 @@ const App = ($) => {
     }
 
     const  render = () => {
-        _headerRender()
+        _headerRender(),
+        _navRender(news_type)
     }
 
     const _headerRender = () => {
@@ -21,6 +25,12 @@ const App = ($) => {
             showRightIcon:true
         }))
     }
+
+    const _navRender = (newsType) => {
+        const tpls = nav.tpl(newsType)
+        $app.append(tpls.navStr)
+        $('.nav .nav-wrapper').append(tpls.itemsStr)
+    } 
 
     init()
 }
