@@ -8,7 +8,7 @@ import { tplReplace } from '../../utils/tools'
 export default () => {
     return {
         name:'newsItem',
-        tpl(data,numPage){
+        tpl(data,pageNum){
             let list = '',
                 tempalte = ''
             
@@ -25,7 +25,7 @@ export default () => {
 
                 list += tempalte.replace(tplReplace(),(node,key) => {
                     return {
-                        pageNum:item.pageNum,
+                        pageNum,
                         index:item.index,
                         uniquekey:item.uniquekey,
                         url:item.url,
