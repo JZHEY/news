@@ -4,13 +4,13 @@ function tplReplace(){
 
 function thumbShow(dom){
     dom.on('load', function() {
-        console.log($(this).css())
+        // console.log($(this).css())
         $(this).css('opacity', 2)
     })
 }
 
 function scrollToBottom(callback) {
-    if(_getScrollTop + _getWindowHeight == _getScrollHeight){
+    if(_getScrollTop() + _getWindowHeight() == _getScrollHeight()){
         callback()
     }
 }

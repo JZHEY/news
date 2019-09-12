@@ -19,7 +19,8 @@ const indexModel = new IndexModel()
 let filed = 'top',
     pageNum = 0,
     pageCount = 0,
-    showPage = 10
+    showPage = 10,
+    bottomLock = false
 
 //页面数据缓存池
 let dataCache = {}
@@ -28,18 +29,19 @@ const App = ($) => {
     
     const $app = $('#app');
     const $list = $app.children('.list')
+    const newScrollToBottom = scrollToBottom.bind(null,scrollBottom)
 
     const init = () => {
-        render(filed,pageNum).then(bindEvent)
+        render(filed,pageNum,showPage).then(bindEvent)
         
     }
 
     //总渲染
-    const  render = (filed,pageNum) => {
+    const  render = (filed,pageNum,showPage) => {
         return new Promise((resolve,reject) => {
             _headerRender(),
             _navRender(news_type)
-            _listRender(filed,pageNum)
+            _listRender(filed,pageNum,showPage)
             resolve()
         })
     }
@@ -66,7 +68,7 @@ const App = ($) => {
     }
     
     //判断页面缓存池是否有对应的数据，没有就请求，有就用缓存池中的数据
-    const _listRender = (filed,pageNum) =>{
+    const _listRender = (filed,pageNum,showPage) =>{
         if(dataCache[filed]){
             console.log('存在存在')
             pageCount = dataCache[filed].length
@@ -79,22 +81,38 @@ const App = ($) => {
                 dataCache[filed] = res
                 _insertRender()
             })
-            $
         }
         
     }
 
     const _insertRender = () => {
-        $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
-        thumbShow($('.news-thumb'))
-        $('.loading-icon').remove()
-        _handleBottomList('append','loading','正在加载中...')
-
+        if(pageNum === 0){
+            $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
+            $('.loading-icon').remove()
+            $(window).on('scroll',newScrollToBottom)
+            bottomLock = false
+        }else{
+            console.log(pageNum)
+            if(pageNum < pageCount){
+                _handleBottomList('remove')
+                $list.append(new_item.tpl(dataCache[filed][pageNum],pageNum))
+                $(window).on('scroll',newScrollToBottom)
+                bottomLock = false
+            }
+        }
+        
+        
         setTimeout(() => {
-            _handleBottomList('removeAndAppend','','已加载全部')
-        }, 2000);
+            if(pageNum < pageCount){
+               pageNum ++
+               _insertRender()
+            }
+        }, 3000);
+
+        thumbShow($('.news-thumb'))
     }
 
+    
     //渲染loading
     const _loadingRender = () => {
         $list.html('')
@@ -116,13 +134,30 @@ const App = ($) => {
         }
     }
 
+    function scrollBottom(){
+        if(pageNum < pageCount-1){
+            if(!bottomLock){
+                bottomLock = true
+                _handleBottomList('append','loading','正在加载中')
+            }
+        }else{
+            _handleBottomList('removeAndAppend','','已加载完成')
+        }
+    }
+
     //根据选择的菜单请求ajax
     function navSelect(){
         // console.log(this)
+        pageNum = 0
+        _handleBottomList('remove','','')
+        $(window).bind('scroll',newScrollToBottom)
+        setTimeout(() => {
+            window.scrollTo(0,0)
+        }, 150);
         const $this = $(this)
         console.log($this.attr('data-type'))
         filed = $this.attr('data-type')
-        _listRender(filed,pageNum)
+        _listRender(filed,pageNum,showPage)
         
         //点击到的item添加class current 其他的item去除属性current
         $this.addClass('current').siblings('.item').removeClass('current')

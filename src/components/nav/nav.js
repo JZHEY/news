@@ -14,11 +14,11 @@ export default () => {
             let navStr = '',
                 itemsStr = ''
             
-            console.log("wrapperW" + wrapperW)
+            // console.log("wrapperW" + wrapperW)
             navStr = navTpl().replace(tplReplace(),wrapperW)
 
             newsType.forEach((item,index) => {
-                console.log(item)
+                // console.log(item)
                 itemsStr += itemTpl().replace(tplReplace(),(node,key) => {
                     return {
                         isCurrent: index === 0 ? 'current' : '',
