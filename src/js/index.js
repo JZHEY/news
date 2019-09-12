@@ -2,21 +2,24 @@ import '../scss/index.scss'
 import Header from '../components/header/index'
 import Nav from '../components/nav/nav'
 import PageLoading from '../components/page_loading/page_loading'
+import BottomTip from '../components/bottom_tip/bottom_tip'
 import { news_type } from '../utils/data'
 import { IndexModel } from '../models/index'
 import newItem from '../components/news_item/news_item';
-import { thumbShow } from '../utils/tools'
+import { thumbShow,scrollToBottom } from '../utils/tools'
 
 const header = new Header()
 const nav = new Nav()
 const new_item = new newItem()
 const pageloading = new PageLoading()
+const bottomTip = new BottomTip()
 
 const indexModel = new IndexModel()
 
 let filed = 'top',
     pageNum = 0,
-    pageCount = 0
+    pageCount = 0,
+    showPage = 10
 
 //页面数据缓存池
 let dataCache = {}
@@ -67,26 +70,50 @@ const App = ($) => {
         if(dataCache[filed]){
             console.log('存在存在')
             pageCount = dataCache[filed].length
-            $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
-            thumbShow($('.news-thumb'))
+            _insertRender()
         }else {
+            //请求数据时，设置加载动画
             _loadingRender()
-            indexModel.getNewsList(filed,10).then((res) => {
+            indexModel.getNewsList(filed,showPage).then((res) => {
                 pageCount = res.length
                 dataCache[filed] = res
-                $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
-                thumbShow($('.news-thumb'))
-                $('.loading-icon').remove()
+                _insertRender()
             })
             $
         }
         
     }
 
+    const _insertRender = () => {
+        $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
+        thumbShow($('.news-thumb'))
+        $('.loading-icon').remove()
+        _handleBottomList('append','loading','正在加载中...')
+
+        setTimeout(() => {
+            _handleBottomList('removeAndAppend','','已加载全部')
+        }, 2000);
+    }
+
     //渲染loading
     const _loadingRender = () => {
         $list.html('')
         $app.append(pageloading.tpl())
+    }
+
+    const _handleBottomList = (how,loading,text) => {
+        switch (how) {
+            case 'append':
+                $app.append(bottomTip.tpl(loading,text))
+                break;
+            case 'remove':
+                $('.bottom-tip').remove()
+                break;
+            case 'removeAndAppend':
+                $('.bottom-tip').remove()
+                $app.append(bottomTip.tpl(loading,text))
+                break;
+        }
     }
 
     //根据选择的菜单请求ajax
@@ -96,14 +123,7 @@ const App = ($) => {
         console.log($this.attr('data-type'))
         filed = $this.attr('data-type')
         _listRender(filed,pageNum)
-        // indexModel.getNewsList(filed,10).then((res) => {
-        //     pageCount = res.length
-        //     dataCache[filed] = res
-        //     $list.html(new_item.tpl(dataCache[filed][pageNum],pageNum))
-        //     thumbShow($('.news-thumb'))
-        //     console.log('``````````````````````````````````dataCache``````````````````````````````````')
-        //         console.log(dataCache)
-        // })
+        
         //点击到的item添加class current 其他的item去除属性current
         $this.addClass('current').siblings('.item').removeClass('current')
     }
