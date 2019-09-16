@@ -65,6 +65,7 @@ const App = ($) => {
     //导航条菜单绑定点击事件
     const bindEvent = () => {
         $('.nav .nav-wrapper').on('click','.item',navSelect)
+        $list.on('click','.news-item',toDetailPage)
     }
     
     //判断页面缓存池是否有对应的数据，没有就请求，有就用缓存池中的数据
@@ -144,6 +145,21 @@ const App = ($) => {
             _handleBottomList('removeAndAppend','','已加载完成')
         }
     }
+
+    function toDetailPage() {
+        console.log(this)
+        const $this = $(this),
+            url = $this.attr('data-url'),
+            uniquekey = $this.attr('data-uniquekey'),
+            pageNum = $this.attr('data-pageNum'),
+            index = $this.attr('data-index')
+            
+            // console.log(dataCache[filed][pageNum][index])
+            localStorage.setItem('target',JSON.stringify(dataCache[filed][pageNum][index]))
+            console.log(`detail.html?news_url=${url}&uniquekey=${uniquekey}`)
+            window.location.href = `detail.html?news_url=${url}&uniquekey=${uniquekey}`
+    }
+    
 
     //根据选择的菜单请求ajax
     function navSelect(){

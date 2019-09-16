@@ -1,4 +1,4 @@
-<div class="news-item type-1">
+<div class="news-item type-1" data-url="{{url}}" data-uniquekey="{{uniquekey}}" data-pageNum="{{pageNum}}" data-index="{{index}}" >
     <div class="main">
         <div class="title">
             <h1>{{title}}</h1>

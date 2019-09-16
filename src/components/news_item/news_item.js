@@ -8,11 +8,11 @@ import { tplReplace } from '../../utils/tools'
 export default () => {
     return {
         name:'newsItem',
-        tpl(data,showCount){
+        tpl(data,pageNum){
             let list = '',
                 tempalte = ''
             
-            data.forEach(item => {
+            data.forEach((item,index) => {
                 if(item.thumbnail_pic_s03){
                     tempalte = tpl_3()
                 }else if (!item.thumbnail_pic_s03 && item.thumbnail_pic_s02){
@@ -25,8 +25,8 @@ export default () => {
 
                 list += tempalte.replace(tplReplace(),(node,key) => {
                     return {
-                        pageNum:item.pageNum,
-                        index:item.index,
+                        pageNum,
+                        index,
                         uniquekey:item.uniquekey,
                         url:item.url,
                         title:item.title,
