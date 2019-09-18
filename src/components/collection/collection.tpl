@@ -1,0 +1,1 @@
+<div class="collection {{type_class}}"></div>

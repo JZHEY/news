@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="title">
-        {{title}}
+        <h1>{{title}}</h1>
     </div>
     <div class="icon right">
         <a href="">

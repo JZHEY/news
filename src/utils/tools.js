@@ -15,10 +15,19 @@ function scrollToBottom(callback) {
     }
 }
 
+function getUrlQueryValue(key) {
+    const reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)','i'),
+          res = window.location.search.substr(1).match(reg)
+
+    console.log(res)
+    return res != null ? decodeURIComponent(res[2]) : null
+}
+
 module.exports = {
     tplReplace,
     thumbShow,
-    scrollToBottom
+    scrollToBottom,
+    getUrlQueryValue
 }
 
 
