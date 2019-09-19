@@ -1,0 +1,21 @@
+.no_content_tip{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    height: 4.4rem;
+
+    img{
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    p{
+        font-size: 1.4rem;
+        color: #999999
+    }
+}
