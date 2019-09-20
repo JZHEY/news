@@ -1,0 +1,7 @@
+function tOReplaceRegExp(){
+    
+}
+
+module.exports = {
+    
+}
