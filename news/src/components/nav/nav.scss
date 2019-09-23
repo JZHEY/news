@@ -1,0 +1,25 @@
+.nav{
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    height: 3.5rem;
+
+    .scroll-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 3.5rem;
+    }
+    
+    .item{
+        display: flex;
+        width: 6rem;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.6rem;
+
+        &.current{
+            color: #ec7a70
+        }
+    }
+}

@@ -1,9 +1,13 @@
 <div class="header">
     <div class="icon-left">
-        <img src="${require('../../images/backward.png')" style="display: {{iconLeft}}">
+        <a href="javascript:history.back()-1">
+            <img src="${require('../../images/backward.png')}" style="display: {{iconLeft}}">
+        </a>
     </div>
-    <div class="title">{{text}}</div>
+    <div class="title"><h1>{{title}}</h1></div>
     <div class="icon-right">
-        <img src="${require('../../images/backward.png')" style="display: {{iconRight}}">
+        <a href="collections.html">
+            <img src="${require('../../images/follow.png')}" style="display: {{iconRight}}">
+        </a>
     </div>
 </div>

@@ -1,0 +1,55 @@
+.site-nav-cover{
+    background-color: #e3e4e5;
+    width: 100%;
+    border-bottom: 1px solid #dddddd;  
+}
+
+.site-nav{
+    height: 31px;
+    background-color: seagreen;
+}
+
+.header{
+    position: relative;
+    height: 140px;
+    background-color: blueviolet;
+    border-bottom: 1px solid #dddddd;  
+}
+
+.header .logo{
+    background-color: #ffffff;
+    position: absolute;
+    width: 190px;
+    height: 120px;
+    left: 0;
+    top: 10px
+}
+
+.main-show{
+    background-color: burlywood;
+    height: 480px;
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    margin-top: 10px;
+}
+
+.main-show .show-one,.show-four,.show-three{
+    width: 190px;
+    background-color: blue
+}
+
+.main-show .show-two{
+    background-color: cadetblue;
+    width: 590px
+}
+.main-show .show-two{
+    margin: 0 10px;
+}
+.main-show .show-three{
+    margin-right: 10px;
+}
+
+.main-show .show-four{
+    background-color: beige;
+}

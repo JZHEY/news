@@ -58,7 +58,8 @@ const config = {
                 test: /\.(png|jpg|jpeg|gif|ico)$/i,
                 loader: [
                     'url-loader?limit=1024&name=img/[name]-[hash:16].[ext]',
-                    'image-webpack-loader'
+                    // 'url-loader?name=img/[name]-[hash:16].[ext]',
+                    // 'image-webpack-loader'
                 ]
             }
         ]
@@ -72,7 +73,7 @@ const config = {
             },
             filename: 'index.html',
             template: path.resolve(__dirname, 'src/index.html'),
-            title: 'JS++新闻头条',
+            title: '新闻头条',
             chunksSortMode: 'manual',
             chunks: ['index'],
             excludeChunks: ['node_modules'],

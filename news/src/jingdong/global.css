@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    background-color: #e3e4e5;
+    font-family: 12px/1.5 'Microsoft YaHei','Heiti SC',tahoma,arial,'Hiragino Sans GB',"\5B8B\4F53",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* 去锯齿 */
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+div,
+ul,
+li{
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+input,
+button{
+    border: none;
+    outline: none
+}
+
+.clearfix{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.layer{
+    margin: 0 auto;
+    width: 1190px;
+}
