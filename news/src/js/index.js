@@ -2,23 +2,37 @@ import '../scss/index.scss'
 import Header from '../components/header/header'
 import Nav from '../components/nav/nav'
 import { news_type } from "../util/data"
+import { IndexModel } from '../models/index'
+import NewsList from '../components/news_list/news_list'
 
-const header = new Header()
-const nav  = new Nav()
+const header = new Header(),
+      nav = new Nav(),
+      newsList =  new NewsList()
+
+const indexModel = new IndexModel()
+
+let field = 'top',
+    pageNum = 10
 
 const App = ($) => {
-    const $app = $('#app')
+    const $app = $('#app'),
+          $list = $app.children('.list')
+
     const init = () => {
-        render()
+        render().then(bindEvent)
     }
 
     const render = () => {
-        _headerRender()
-        _navRender()
+        return new Promise((resolve,reject) => {
+            _headerRender()
+            _navRender()
+            _listRender()
+            resolve()
+        })
     }
 
     const bindEvent = () => {
-        
+        $('.scroll-wrapper').on('click','.item',selectNav)
     }
 
     const _headerRender = () => {
@@ -35,6 +49,26 @@ const App = ($) => {
         $app.append(tpls.navStr)
         $('.scroll-wrapper').append(tpls.itemStr)
     }
+
+    const _listRender = () => {
+        indexModel.getNewsList(field,pageNum).then(res => {
+            res.forEach(item => {
+                $list.append(newsList.tpl(item))
+                console.log(res)
+            });
+            
+        })
+        
+    }
+
+    function selectNav () {
+        const $this = $(this)
+        // console.log($this)
+        field = $this.attr('data-type')
+        $this.addClass("current").siblings().removeClass('current')
+
+    }
+
 
     init()
 }

@@ -24,7 +24,7 @@ export default () => {
                     }[key]
                 })
             });
-            console.log(navStr,itemStr)
+            // console.log(navStr,itemStr)
 
             return {
                 navStr,

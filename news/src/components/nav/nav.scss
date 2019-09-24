@@ -2,24 +2,30 @@
     background-color: #ffffff;
     border-bottom: 1px solid #dddddd;
     height: 3.5rem;
+    overflow: hidden;
 
-    .scroll-wrapper{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 3.5rem;
-    }
+    .scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        .scroll-wrapper{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 4.0rem;
+        }
+        
+        .item{
+            display: flex;
+            width: 6rem;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
     
-    .item{
-        display: flex;
-        width: 6rem;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.6rem;
-
-        &.current{
-            color: #ec7a70
+            &.current{
+                color: #ec7a70
+            }
         }
     }
 }
