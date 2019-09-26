@@ -4,15 +4,21 @@ import Nav from '../components/nav/nav'
 import { news_type } from "../util/data"
 import { IndexModel } from '../models/index'
 import NewsList from '../components/news_list/news_list'
+import Loading from '../components/loading/loading'
+import { scrollToBottom } from '../util/tools'
 
 const header = new Header(),
       nav = new Nav(),
-      newsList =  new NewsList()
+      newsList =  new NewsList(),
+      loading = new Loading()
 
 const indexModel = new IndexModel()
 
 let field = 'top',
-    pageNum = 10
+    pageNum = 0,
+    showPage = 10,
+    pageCount = 0,
+    dataCache = {}
 
 const App = ($) => {
     const $app = $('#app'),
@@ -47,17 +53,28 @@ const App = ($) => {
     const _navRender = () => {
         let tpls = nav.tpl(news_type)
         $app.append(tpls.navStr)
-        $('.scroll-wrapper').append(tpls.itemStr)
+        $('.nav .scroll-wrapper').append(tpls.itemStr)
+    }
+
+    const _loadingRender = () =>{
+        $list.html("")
+        $app.append(loading.tpl())
     }
 
     const _listRender = () => {
-        indexModel.getNewsList(field,pageNum).then(res => {
-            res.forEach(item => {
-                $list.append(newsList.tpl(item))
-                console.log(res)
-            });
-            
-        })
+        console.log($list)
+        if(dataCache[field]){
+            pageCount = dataCache.length
+            $list.html(newsList.tpl(dataCache[field][pageNum]),pageNum)
+        }else{
+            _loadingRender()
+            indexModel.getNewsList(field,showPage).then(res => {
+                pageCount = res.length
+                dataCache[field] = res
+                $list.html(newsList.tpl(dataCache[field][pageNum]),pageNum)
+                $('.loading').remove()
+            })
+        }
         
     }
 
@@ -66,7 +83,7 @@ const App = ($) => {
         // console.log($this)
         field = $this.attr('data-type')
         $this.addClass("current").siblings().removeClass('current')
-
+        _listRender()
     }
 
 

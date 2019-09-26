@@ -10,17 +10,21 @@ export default () => {
     return {
         name:'newsList',
         tpl(newsData){
+            // console.log(newsData)
             var listStr = '',
                 template = ''
             newsData.forEach((item,index) => {
-                // console.log(item)
                 if(item.thumbnail_pic_s03){
+                    // console.log('---3---',item.author_name)
                    template = tpl_3()
                 }else if(!item.thumbnail_pic_s03 && item.thumbnail_pic_s02){
+                    // console.log('---2---',item.author_name)
                     template = tpl_2()
-                }else if(!item.thumbnail_pic_s02 && item.thumbnail_pic_s01){
+                }else if(!item.thumbnail_pic_s02 && item.thumbnail_pic_s){
+                    // console.log('---1---',item.author_name)
                     template = tpl_1()
-                }else if(!item.thumbnail_pic_s01 && item.thumbnail_pic_s){
+                }else{
+                    // console.log('---0---',item.author_name)
                     template = tpl_0()
                 }
 
@@ -30,20 +34,19 @@ export default () => {
                         uniquekey:item.uniquekey,
                         pageNum:item.pageNum,
                         index:item.index,
+                        title:item.title,
                         thumbnail_pic_s:item.thumbnail_pic_s,
                         thumbnail_pic_s02:item.thumbnail_pic_s02,
                         thumbnail_pic_s03:item.thumbnail_pic_s03,
-                        author:item.author,
+                        author:item.author_name,
                         date:item.date
                     }[key]
                 })
             });
 
-            console.log(listStr)
+            // console.log(listStr)
 
-            return{
-                listStr
-            }
+            return listStr
         }
     }
 }

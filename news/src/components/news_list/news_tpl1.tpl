@@ -1,8 +1,10 @@
 <div class="item-news type-1" data-url="{{url}}" data-uniquekey="{{uniquekey}}" data-pageNum="{{pageNum}}" data-index="{{index}}">
-    <h1>{{title}}</h1>
-    <div class="pic">
-        <div class="img">
-            <img src="{{thumbnail_pic_s}}" alt="">
+    <div class="main">
+        <div class="title"><h1>{{title}}</h1></div>
+        <div class="pic">
+            <div class="img">
+                <img src="{{thumbnail_pic_s}}" alt="">
+            </div>
         </div>
     </div>
     <div class="info">
