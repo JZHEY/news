@@ -9,7 +9,7 @@ export default () => {
             return tpl().replace(replaceRegExp(),(node,key) => {
                 return {
                     text:options.text,
-                    isloading:options.isloading ? 'block' : 'none'
+                    isloading:options.isloading ? 'loading' : 'none'
                 }[key]
             })
         }

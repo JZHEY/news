@@ -9,8 +9,8 @@ import { replaceRegExp } from '../../util/tools'
 export default () => {
     return {
         name:'newsList',
-        tpl(newsData){
-            // console.log(newsData)
+        tpl(newsData,pageNum){
+            console.log(pageNum)
             var listStr = '',
                 template = ''
             newsData.forEach((item,index) => {
@@ -30,10 +30,10 @@ export default () => {
 
                 listStr += template.replace(replaceRegExp(), (node,key) => {
                     return {
+                        pageNum,
+                        index,
                         url:item.url,
                         uniquekey:item.uniquekey,
-                        pageNum:item.pageNum,
-                        index:item.index,
                         title:item.title,
                         thumbnail_pic_s:item.thumbnail_pic_s,
                         thumbnail_pic_s02:item.thumbnail_pic_s02,
